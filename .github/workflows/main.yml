@@ -23,7 +23,7 @@ jobs:
       with:
         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        region: us-east-1  
+        region: us-east-1 
 
     - name: Initialize Terraform
       run: terraform init
@@ -31,5 +31,11 @@ jobs:
     - name: Apply Terraform
       run: terraform apply -auto-approve
 
+    - name: Get Jenkins public IP
+      id: jenkins_ip
+      run: |
+        echo "JENKINS_PUBLIC_IP=$(terraform output -raw jenkins_url)" >> $GITHUB_ENV
+
     - name: Output Jenkins URL
-      run: echo "Jenkins is available at: http://${{ steps.terraform.outputs.jenkins_url }}"
+      run: |
+        echo "Jenkins is available at: http://${{ env.JENKINS_PUBLIC_IP }}:8080"

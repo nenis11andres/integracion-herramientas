@@ -1,0 +1,35 @@
+name: Deploy Jenkins con Terraform
+
+on:
+  push:
+    branches:
+      - main  # Ejecutará el workflow cuando se haga un push a la rama 'main'
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Terraform
+      uses: hashicorp/setup-terraform@v1
+      with:
+        terraform_version: 1.3.0
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        region: us-east-1  # Asegúrate de que coincida con la región en tu Terraform
+
+    - name: Initialize Terraform
+      run: terraform init
+
+    - name: Apply Terraform
+      run: terraform apply -auto-approve
+
+    - name: Output Jenkins URL
+      run: echo "Jenkins is available at: http://${{ steps.terraform.outputs.jenkins_url }}"

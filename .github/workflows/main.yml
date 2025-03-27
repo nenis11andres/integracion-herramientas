@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2  # Este paso obtiene el código de tu repositorio
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
@@ -28,14 +28,17 @@ jobs:
 
     - name: Initialize Terraform
       run: terraform init  # Inicializa Terraform
+      working-directory: ./terraform  # Especifica que el comando debe ejecutarse en la carpeta 'terraform'
 
     - name: Apply Terraform
       run: terraform apply -auto-approve  # Aplica la configuración de Terraform sin solicitar confirmación
+      working-directory: ./terraform  # Especifica que el comando debe ejecutarse en la carpeta 'terraform'
 
     - name: Get Jenkins public IP
       id: jenkins_ip
       run: |
         echo "JENKINS_PUBLIC_IP=$(terraform output -raw jenkins_url)" >> $GITHUB_ENV  # Obtén la IP pública de Jenkins desde Terraform
+      working-directory: ./terraform  # Especifica que el comando debe ejecutarse en la carpeta 'terraform'
 
     - name: Output Jenkins URL
       run: |

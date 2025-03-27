@@ -1,0 +1,2 @@
+terraform/.terraform.lock.hcl text eol=lf
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.92.0/windows_amd64/LICENSE.txt text eol=lf

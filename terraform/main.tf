@@ -50,6 +50,7 @@ resource "aws_route_table" "jenkins_route_table" {
   }
 }
 
+
 # Crear una ruta para permitir tráfico a Internet
 resource "aws_route" "internet_access" {
   route_table_id         = aws_route_table.jenkins_route_table.id

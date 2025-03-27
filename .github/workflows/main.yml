@@ -16,7 +16,7 @@ jobs:
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        terraform_version: 1.3.0
+        terraform_version: 1.3.0  # Especifica la versión de Terraform que deseas usar
 
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
@@ -26,17 +26,16 @@ jobs:
         aws-region: us-east-1  # Asegúrate de que la región coincida con tu configuración de Terraform
 
     - name: Initialize Terraform
-      run: terraform init
+      run: terraform init  # Inicializa Terraform
 
     - name: Apply Terraform
-      run: terraform apply -auto-approve
+      run: terraform apply -auto-approve  # Aplica la configuración de Terraform sin pedir confirmación
 
     - name: Get Jenkins public IP
       id: jenkins_ip
       run: |
-        echo "JENKINS_PUBLIC_IP=$(terraform output -raw jenkins_url)" >> $GITHUB_ENV
+        echo "JENKINS_PUBLIC_IP=$(terraform output -raw jenkins_url)" >> $GITHUB_ENV  # Obtén la IP pública de Jenkins desde Terraform
 
     - name: Output Jenkins URL
       run: |
-        echo "Jenkins is available at: http://${{ env.JENKINS_PUBLIC_IP }}:8080"
-
+        echo "Jenkins is available at: http://${{ env.JENKINS_PUBLIC_IP }}:8080"  # Muestra la URL de Jenkins

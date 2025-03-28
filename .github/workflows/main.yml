@@ -5,6 +5,7 @@ on:
     branches:
       - main  # Ejecutará el workflow cuando se haga un push a la rama 'main'
 
+
 jobs:
   terraform:
     runs-on: ubuntu-latest

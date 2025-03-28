@@ -34,6 +34,7 @@ jobs:
       run: terraform apply -auto-approve  # Aplica la configuración de Terraform sin solicitar confirmación
       working-directory: ./terraform  # Especifica que el comando debe ejecutarse en la carpeta 'terraform'
 
+
     - name: Get Jenkins public IP
       id: jenkins_ip
       run: |

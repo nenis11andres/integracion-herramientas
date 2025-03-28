@@ -38,23 +38,4 @@ jobs:
       run: terraform output -raw jenkins_url
       working-directory: ./terraform  # Esto es para depurar y verificar la salida de Terraform
 
-    - name: Obtener la IP pública de Jenkins
-      id: jenkins_ip
-      run: |
-        # Obtener la URL de Jenkins, eliminar http:// y :8080 al final
-        JENKINS_PUBLIC_IP=$(terraform output -raw jenkins_url | sed 's|http://||' | sed 's|:8080$||')
-        
-        # Verificar que la IP se extrajo correctamente
-        echo "JENKINS_PUBLIC_IP=$JENKINS_PUBLIC_IP"
-        
-        # Establecer la IP como variable de entorno para GitHub Actions
-        echo "JENKINS_PUBLIC_IP=${JENKINS_PUBLIC_IP}" >> $GITHUB_ENV
-        
-        # Verificar si la variable de entorno fue configurada correctamente
-        echo "JENKINS_PUBLIC_IP is set to: $JENKINS_PUBLIC_IP"
-
-      working-directory: ./terraform  # Especifica que el comando debe ejecutarse en la carpeta 'terraform'
-
-    - name: Output Jenkins URL
-      run: |
-        echo "Jenkins is available at: http://${{ env.JENKINS_PUBLIC_IP }}:8080"  # Muestra la URL de Jenkins
+   
